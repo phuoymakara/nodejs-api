@@ -1,0 +1,15 @@
+FROM node:16.14.0
+
+ARG MYSQL_DEFAULT
+ARG SERVER_PORT
+ENV MYSQL_DEFAULT=$MYSQL_DEFAULT
+ENV SERVER_PORT=$SERVER_PORT
+
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN yarn install
+COPY . .
+RUN yarn build
+
+EXPOSE ${SERVER_PORT}
+CMD [ "yarn", "start" ]
